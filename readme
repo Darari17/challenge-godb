@@ -1,0 +1,43 @@
+# SUBMISSION PROJECT
+
+    Sebuah aplikasi golang sederhana yang terhubung ke database PostgreSQL.
+
+## DESKRIPSI
+
+    Submission Project dari Enigma Camp materi Golang Database dengan nama challenge-godb.
+
+## FITUR
+
+    1. MENU UTAMA:
+        - CUSTOMER
+        - SERVICE
+        - ORDER
+        - EXIT
+
+    2. MENU CUSTOMER:
+        - Create Customer
+        - View of List Customer
+        - View Details Customer by ID
+        - Update Customer
+        - Delete Customer
+
+    3. MENU SERVICE:
+        - Create Service
+        - VIew of List Service
+        - View Details Service by ID
+        - Update Service
+        - Delete Service
+
+    4. MENU ORDER:
+        - Create Order
+        - Complete Order
+        - View of List Order
+        - View Order Details by ID
+
+## INFORMASI PEMBUAT DAN KONTAK
+
+    Pembuat:
+        Farid Rhamadhan Darari
+
+    Email:
+        faridramadhan59@gmail.com
