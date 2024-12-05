@@ -325,14 +325,14 @@ func MenuCustomer(db *sql.DB) {
 		choice, _ := strconv.Atoi(scanner.Text())
 
 		switch choice {
-		case 1: AddCustomer(db)
-		case 2:	ViewOfListCustomer(db)
-		case 3: ViewDetailsCustomerById(db)
-		case 4: UpdateCustomer(db)
-		case 5: DeleteCustomer(db)
-		case 6: return
-		default: fmt.Println("Input invalid, Try again!")
-	}
-	fmt.Println(strings.Repeat("=", 48))
+			case 1: AddCustomer(db)
+			case 2:	ViewOfListCustomer(db)
+			case 3: ViewDetailsCustomerById(db)
+			case 4: UpdateCustomer(db)
+			case 5: DeleteCustomer(db)
+			case 6: return
+			default: fmt.Println("Input invalid, Try again!")
+		}
+		fmt.Println(strings.Repeat("=", 48))
 	}
 }

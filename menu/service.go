@@ -342,14 +342,14 @@ func MenuService(db *sql.DB){
 		choice, _ := strconv.Atoi(scanner.Text())
 
 		switch choice {
-		case 1: AddService(db)
-		case 2:	ViewOfListService(db)
-		case 3: ViewDetailsServiceById(db)
-		case 4: UpdateService(db)
-		case 5: DeleteService(db)
-		case 6: return
-		default: fmt.Println("Input invalid, Try again!")
-	}
-	fmt.Println(strings.Repeat("=", 48))
+			case 1: AddService(db)
+			case 2:	ViewOfListService(db)
+			case 3: ViewDetailsServiceById(db)
+			case 4: UpdateService(db)
+			case 5: DeleteService(db)
+			case 6: return
+			default: fmt.Println("Input invalid, Try again!")
+		}
+		fmt.Println(strings.Repeat("=", 48))
 	}
 }

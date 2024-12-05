@@ -180,7 +180,7 @@ func AddOrder(db *sql.DB){
 		fmt.Printf("%s Error committing transaction: %v\n", utils.ERROR, err)
 		return
 	}
-	fmt.Printf("%s Transaction committed!", utils.SUCCESS)
+	fmt.Printf("%s Transaction committed!\n", utils.SUCCESS)
 }
 
 //* 2. COMPLETE ORDER 
@@ -361,12 +361,12 @@ func MenuOrder(db *sql.DB){
 		choice, _ := strconv.Atoi(scanner.Text())
 
 		switch choice {
-		case 1: AddOrder(db)
-		case 2: CompleteOrder(db)
-		case 3: ViewOfListOrder(db)
-		case 4: ViewOrderDetailsById(db)
-		case 5: return
-		default: fmt.Println("Input invalid, Try again!")
+			case 1: AddOrder(db)
+			case 2: CompleteOrder(db)
+			case 3: ViewOfListOrder(db)
+			case 4: ViewOrderDetailsById(db)
+			case 5: return
+			default: fmt.Println("Input invalid, Try again!")
 		}
 		fmt.Println(strings.Repeat("=", 48))
 	}
