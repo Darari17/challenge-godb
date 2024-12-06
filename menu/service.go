@@ -265,6 +265,7 @@ func UpdateService(db *sql.DB){
 func DeleteService(db *sql.DB){
 	const (
 		sqlCheckService = "SELECT EXISTS (SELECT 1 FROM service WHERE service_id = $1);"
+		sqlCheckServiceInOrderDetail = "SELECT EXISTS (SELECT 1 FROM order_detail WHERE service_id = $1);"
 		sqlDeleteService = "DELETE FROM service WHERE service_id = $1;"
 	)
 
@@ -287,9 +288,18 @@ func DeleteService(db *sql.DB){
 			fmt.Printf("%s Error checking service ID existence: %v\n", utils.ERROR, err)
 			return
 		}
-
 		if !isIdExists {
 			fmt.Printf("%s Service with ID: %d not found!.\n", utils.WARNING, s.ServiceID)
+			continue
+		}
+
+		err = db.QueryRow(sqlCheckServiceInOrderDetail, s.ServiceID).Scan(&isIdExists)
+		if err != nil {
+			fmt.Printf("%s Error checking service ID existence: %v\n", utils.ERROR, err)
+			return
+		}
+		if isIdExists {
+			fmt.Printf("%s Service ID: %d is being used in orders. Please delete the order first.\n", utils.WARNING, s.ServiceID)
 			continue
 		}
 		break

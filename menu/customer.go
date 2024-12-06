@@ -249,6 +249,7 @@ func UpdateCustomer(db *sql.DB){
 func DeleteCustomer(db *sql.DB){
 	const (
 		sqlCheckCustomer = "SELECT EXISTS (SELECT 1 FROM customer WHERE customer_id = $1);"
+		sqlCheckCustomerInOrder = "SELECT EXISTS (SELECT 1 FROM \"order\" WHERE customer_id = $1);"
 		sqlDeleteCustomer = "DELETE FROM customer WHERE customer_id = $1;"
 	)
 
@@ -271,9 +272,18 @@ func DeleteCustomer(db *sql.DB){
 			fmt.Printf("%s Error checking customer ID existence: %v\n", utils.ERROR, err)
 			return
 		}
-		
 		if !isIdExists {
 			fmt.Printf("%s Customer with ID: %d not found!\n", utils.WARNING, c.CustomerID)
+			continue
+		}
+
+		err = db.QueryRow(sqlCheckCustomerInOrder, c.CustomerID).Scan(&isIdExists)
+		if err != nil {
+			fmt.Printf("%s Error checking customer ID existence: %v\n", utils.ERROR, err)
+			return
+		}
+		if isIdExists {
+			fmt.Printf("%s Customer ID: %d is being used in orders. Please delete the order first.\n", utils.WARNING, c.CustomerID)
 			continue
 		}
 		break
