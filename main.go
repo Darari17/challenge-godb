@@ -68,12 +68,13 @@ func main() {
 		choice, _ := strconv.Atoi(scanner.Text())
 
 		switch choice {
-		case 1 : menu.MenuCustomer(db)
-		case 2 : menu.MenuService(db)
-		case 3 : menu.MenuOrder(db)
-		case 4 : return
-		default: fmt.Println("Input invalid, Try again!")
+			case 1 : menu.MenuCustomer(db)
+			case 2 : menu.MenuService(db)
+			case 3 : menu.MenuOrder(db)
+			case 4 : return
+			default: fmt.Println("Input invalid, Try again!")
 		}
 		fmt.Println(strings.Repeat("=", 48))
+		fmt.Printf("%s %s %s\n", leftPadding, title, rightPadding)
 	}
 }

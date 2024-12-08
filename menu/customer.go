@@ -81,6 +81,7 @@ func AddCustomer(db *sql.DB){
 	scanner.Scan()
 	c.Address = scanner.Text()
 
+	fmt.Println("")
 	fmt.Println(utils.RESULT)
 	fmt.Printf("Customer ID: %d | Name: %s | Phone: %s | Address: %s\n", c.CustomerID, c.Name, c.Phone, c.Address)
 	for {
@@ -102,6 +103,7 @@ func AddCustomer(db *sql.DB){
 			fmt.Printf("%s Invalid choice! Please enter 'y' or 'n'!\n", utils.WARNING)
 		}
 	}
+	fmt.Println("")
 }
 
 //* 3. VIEW OF LIST CUSTOMER
@@ -114,6 +116,7 @@ func ViewOfListCustomer(db *sql.DB){
 	}
 	defer rows.Close()
 
+	fmt.Println("")
 	fmt.Println(utils.RESULT)
 	for rows.Next(){
 		c := Customer{}
@@ -122,9 +125,10 @@ func ViewOfListCustomer(db *sql.DB){
 			fmt.Printf("%s Failed to scan data Customer: %v\n", utils.ERROR, err)
 			return
 		}
-		fmt.Printf("Customer ID: %d | Name: %s | Phone: %s | Address: %s | Created At: %s | Updated At: %s\n", c.CustomerID, c.Name, c.Phone, c.Address, c.CreatedAt.Format("2006-01-02"), c.UpdatedAt.Format("2006-01-02"))
+		fmt.Printf("Customer ID: %d | Name: %s | Phone: %s | Address: %s | Created At: %s | Updated At: %s\n", c.CustomerID, c.Name, c.Phone, c.Address, c.CreatedAt.Format("2006-01-02 15:04:05"), c.UpdatedAt.Format("2006-01-02 15:04:05"))
 	}
 	fmt.Printf("%s Get all data Customer succesfully!\n", utils.SUCCESS)
+	fmt.Println("")
 }
 
 //* 4. VIEW DETAILS CUSTOMER BY ID
@@ -156,10 +160,12 @@ func ViewDetailsCustomerById(db *sql.DB){
 		break
 	}
 
+	fmt.Println("")
 	fmt.Println(utils.RESULT)
-	fmt.Printf("Customer ID: %d | Name: %s | Phone: %s | Address: %s | Created At: %s | Updated At: %s\n", c.CustomerID, c.Name, c.Phone, c.Address, c.CreatedAt.Format("2006-01-02"), c.UpdatedAt.Format("2006-01-02"))
+	fmt.Printf("Customer ID: %d | Name: %s | Phone: %s | Address: %s | Created At: %s | Updated At: %s\n", c.CustomerID, c.Name, c.Phone, c.Address, c.CreatedAt.Format("2006-01-02 15:04:05"), c.UpdatedAt.Format("2006-01-02 15:04:05"))
 
 	fmt.Printf("%s Get data Customer by ID succesfully!\n", utils.SUCCESS)
+	fmt.Println("")
 }
 
 //* 5. UPDATE CUSTOMER
@@ -222,6 +228,7 @@ func UpdateCustomer(db *sql.DB){
 	scanner.Scan()
 	c.Address = scanner.Text()
 
+	fmt.Println("")
 	fmt.Println(utils.RESULT)
 	fmt.Printf("Customer ID: %d | Name: %s | Phone: %s | Address: %s\n", c.CustomerID, c.Name, c.Phone, c.Address)
 	for {
@@ -243,6 +250,7 @@ func UpdateCustomer(db *sql.DB){
 			fmt.Printf("%s Invalid choice! Please enter 'y' or 'n'.\n", utils.WARNING)
 		}
 	}
+	fmt.Println("")
 }
 
 //* 6. DELETE CUSTOMER
@@ -289,6 +297,7 @@ func DeleteCustomer(db *sql.DB){
 		break
 	}
 
+	fmt.Println("")
 	for {
 		fmt.Printf("Are you sure want to delete Customer ID: %d (y/n)? ", c.CustomerID)
 		scanner.Scan()
@@ -306,7 +315,8 @@ func DeleteCustomer(db *sql.DB){
 		} else {
 			fmt.Printf("%s Invalid choice! Please enter 'y' or 'n'!\n", utils.WARNING)
 		}
-	}	
+	}
+	fmt.Println("")
 }
 
 //* 7. MENU CUSTOMER
@@ -344,5 +354,6 @@ func MenuCustomer(db *sql.DB) {
 			default: fmt.Println("Input invalid, Try again!")
 		}
 		fmt.Println(strings.Repeat("=", 48))
+		fmt.Printf("%s %s %s\n", leftPadding, title, rightPadding)
 	}
 }

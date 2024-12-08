@@ -135,6 +135,7 @@ func AddOrder(db *sql.DB){
 		}
 	}
 
+	fmt.Println("")
 	fmt.Println(utils.RESULT)
 	fmt.Printf("Table 'order':\nOrder ID: %d | Customer ID: %d | Receiver By: %s\n", o.OrderID, o.CustomerID, o.ReceivedBy)
 	fmt.Printf("Table 'order_detail':\n")
@@ -181,6 +182,7 @@ func AddOrder(db *sql.DB){
 		return
 	}
 	fmt.Printf("%s Transaction committed!\n", utils.SUCCESS)
+	fmt.Println("")
 }
 
 //* 2. COMPLETE ORDER 
@@ -228,6 +230,7 @@ func CompleteOrder(db *sql.DB){
 		break
 	}
 	
+	fmt.Println("")
 	for {
 		fmt.Print("Are you sure you want complete this order (y/n)? ")
 		scanner.Scan()
@@ -247,6 +250,7 @@ func CompleteOrder(db *sql.DB){
 			fmt.Printf("%s Invalid choice! Please enter 'y' or 'n'.\n", utils.WARNING)
 		}
 	}
+	fmt.Println("")
 }
 
 //* 3. VIEW OF LIST ORDER
@@ -259,6 +263,7 @@ func ViewOfListOrder(db *sql.DB){
 	}
 	defer rows.Close()
 
+	fmt.Println("")
 	fmt.Println(utils.RESULT)
 	for rows.Next(){
 		o := Order{}
@@ -271,19 +276,20 @@ func ViewOfListOrder(db *sql.DB){
 			"Order ID: %d | Customer ID: %d | Order Date: %s | Completion Date: %s | Received By: %s | Created At: %s | Updated AT: %s\n",
 			o.OrderID, 
 			o.CustomerID, 
-			o.OrderDate.Format("2006-01-02"),
+			o.OrderDate.Format("2006-01-02 15:04:05"),
 			func() string {
 				if o.CompletionDate.Valid {
-					return o.CompletionDate.Time.Format("2006-01-02")
+					return o.CompletionDate.Time.Format("2006-01-02 15:04:05")
 				}
 				return "NULL"
 			}(),
 			o.ReceivedBy,
-			o.CreatedAt.Format("2006-01-02"), 
-			o.UpdatedAt.Format("2006-01-02"),
+			o.CreatedAt.Format("2006-01-02 15:04:05"), 
+			o.UpdatedAt.Format("2006-01-02 15:04:05"),
 		)
 	}
 	fmt.Printf("%s Get all data order succesfully!\n", utils.SUCCESS)
+	fmt.Println("")
 }
 
 //* 4. VIEW ORDER DETAILS BY ID
@@ -293,47 +299,58 @@ func ViewOrderDetailsById(db *sql.DB){
 		sqlGetOrderDetailById = "SELECT order_detail_id, order_id, service_id, qty FROM order_detail WHERE order_id = $1;"
 	)
 
-	od := OrderDetail{}
-	var err error
 	var isIdExists bool
 	scanner := bufio.NewScanner(os.Stdin)
 
 	for {
-		
 		fmt.Print("Enter order ID: ")
 		scanner.Scan()
-		od.OrderID, err = strconv.Atoi(scanner.Text())
-		if err != nil || od.OrderID <= 0 {
+		orderID, err := strconv.Atoi(scanner.Text())
+		if err != nil || orderID <= 0 {
 			fmt.Printf("%s Please enter a valid positive number.\n", utils.WARNING)
 			continue
 		}
 
-		err = db.QueryRow(sqlCheckOrder, od.OrderID).Scan(&isIdExists)
+		err = db.QueryRow(sqlCheckOrder, orderID).Scan(&isIdExists)
 		if err != nil {
 			fmt.Printf("%s Error checking order ID existence: %v\n", utils.ERROR, err)
 			return
 		}
 		if !isIdExists {
-			fmt.Printf("%s Order with ID: %d not found!.\n", utils.WARNING, od.OrderID)
+			fmt.Printf("%s Order with ID: %d not found!.\n", utils.WARNING, orderID)
 			continue
 		}
 		
-		err = db.QueryRow(sqlGetOrderDetailById, od.OrderID).Scan(
-			&od.OrderDetailID,
-			&od.OrderID,
-			&od.ServiceID,
-			&od.Qty,
-		)
+		rows, err := db.Query(sqlGetOrderDetailById, orderID)
 		if err != nil {
 			fmt.Printf("%s Error querying order detail data: %s\n", utils.ERROR, err)
 			return
 		}
+		defer rows.Close()
+
+		fmt.Println("")
+		fmt.Println(utils.RESULT)
+		fmt.Printf("Order Details for Order ID: %d\n", orderID)
+
+		for rows.Next(){
+			od := OrderDetail{}
+			err := rows.Scan(&od.OrderDetailID, &od.OrderID, &od.ServiceID, &od.Qty)
+			if err != nil {
+				fmt.Printf("%s Error reading order detail row: %v\n", utils.ERROR, err)
+				return
+			}
+
+			fmt.Printf("Order Detail ID: %d | Order ID: %d | Service ID: %d | Quantity: %d\n", od.OrderDetailID, od.OrderID, od.ServiceID, od.Qty)
+		}
+
+		if err = rows.Err(); err != nil {
+			fmt.Printf("%s Error processing rows: %v\n", utils.ERROR, err)
+			return
+		}
+		fmt.Printf("%s Retrieved all order details successfully!\n", utils.SUCCESS)
+		fmt.Println("")
 		break
 	}
-
-	fmt.Println(utils.RESULT)
-	fmt.Printf("Order detail ID: %d | Order ID: %d | Service ID: %d | Quantity: %d\n", od.OrderDetailID, od.OrderID, od.ServiceID, od.Qty)
-	fmt.Printf("%s Get data order details by ID succesfully!\n", utils.SUCCESS)
 }
 
 //* 5. MENU ORDER
@@ -369,5 +386,6 @@ func MenuOrder(db *sql.DB){
 			default: fmt.Println("Input invalid, Try again!")
 		}
 		fmt.Println(strings.Repeat("=", 48))
+		fmt.Printf("%s %s %s\n", leftPadding, title, rightPadding)
 	}
 }

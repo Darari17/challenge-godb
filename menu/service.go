@@ -88,6 +88,7 @@ func AddService(db *sql.DB){
 		break
 	}
 
+	fmt.Println("")
 	fmt.Println(utils.RESULT)
 	fmt.Printf("Service ID: %d | Service Name: %s | Unit: %s | Price: %d\n", s.ServiceID, s.ServiceName, s.Unit, s.Price)
 
@@ -110,6 +111,7 @@ func AddService(db *sql.DB){
 			fmt.Printf("%s Invalid choice! Please enter 'y' or 'n'.\n", utils.WARNING)
 		}
 	}
+	fmt.Println("")
 }
 
 //* 3. VIEW OF LIST SERVICE
@@ -122,6 +124,7 @@ func ViewOfListService(db *sql.DB){
 	}
 	defer rows.Close()
 
+	fmt.Println("")
 	fmt.Println(utils.RESULT)
 	for rows.Next(){
 		s := Service{}
@@ -130,9 +133,10 @@ func ViewOfListService(db *sql.DB){
 			fmt.Printf("%s Failed to scan data Service: %v\n", utils.ERROR, err)
 			return
 		}
-		fmt.Printf("Service ID: %d | Service Name: %s | Unit: %s | Price: %d | Created At: %s | Updated At: %s\n", s.ServiceID, s.ServiceName, s.Unit, s.Price, s.CreatedAt.Format("2006-01-02"), s.UpdatedAt.Format("2006-01-02"))
+		fmt.Printf("Service ID: %d | Service Name: %s | Unit: %s | Price: %d | Created At: %s | Updated At: %s\n", s.ServiceID, s.ServiceName, s.Unit, s.Price, s.CreatedAt.Format("2006-01-02 15:04:05"), s.UpdatedAt.Format("2006-01-02 15:04:05"))
 	}
 	fmt.Printf("%s Get all data service succesfully!\n", utils.SUCCESS)
+	fmt.Println("")
 }
 
 //* 4. VIEW DETAILS SERVICE BY ID
@@ -164,10 +168,12 @@ func ViewDetailsServiceById(db *sql.DB){
 		break
 	}
 
+	fmt.Println("")
 	fmt.Println(utils.RESULT)
-	fmt.Printf("Service ID: %d | Service Name: %s | Unit: %s | Price: %d | Created At: %s | Updated At: %s\n", s.ServiceID, s.ServiceName, s.Unit, s.Price, s.CreatedAt.Format("2006-01-02"), s.UpdatedAt.Format("2006-01-02"))
+	fmt.Printf("Service ID: %d | Service Name: %s | Unit: %s | Price: %d | Created At: %s | Updated At: %s\n", s.ServiceID, s.ServiceName, s.Unit, s.Price, s.CreatedAt.Format("2006-01-02 15:04:05"), s.UpdatedAt.Format("2006-01-02 15:04:05"))
 	
 	fmt.Printf("%s Get data Service by ID successfully!\n", utils.SUCCESS)
+	fmt.Println("")
 }
 
 //* 5. UPDATE SERVICE
@@ -237,6 +243,7 @@ func UpdateService(db *sql.DB){
 		break
 	}
 
+	fmt.Println("")
 	fmt.Println(utils.RESULT)
 	fmt.Printf("Service ID: %d | Service Name: %s | Unit: %s | Price: %d\n", s.ServiceID, s.ServiceName, s.Unit, s.Price)
 
@@ -259,6 +266,7 @@ func UpdateService(db *sql.DB){
 			fmt.Printf("%s Invalid choice! Please enter 'y' or 'n'.\n", utils.WARNING)
 		}
 	}
+	fmt.Println("")
 }
 
 //* 6. DELETE SERVICE
@@ -305,6 +313,7 @@ func DeleteService(db *sql.DB){
 		break
 	}
 
+	fmt.Println("")
 	for {
 		fmt.Printf("Are you sure want to delete Service ID: %d (y/n)? ", s.ServiceID)
 		scanner.Scan()
@@ -312,18 +321,20 @@ func DeleteService(db *sql.DB){
 		if choice == "y" {
 			_, err = db.Exec(sqlDeleteService, s.ServiceID)
 			if err != nil {
-				fmt.Printf("%s Failed to Delete Service: %v", utils.ERROR, err)
+				fmt.Printf("%s Failed to Delete Service: %v\n", utils.ERROR, err)
 				return
 			}
-			fmt.Printf("%s Delete Service Successfully!", utils.SUCCESS)
+			fmt.Printf("%s Delete Service Successfully!\n", utils.SUCCESS)
 			break
 		} else if choice == "n" {
 			fmt.Println("Canceled!")
+			
 			return
 		} else {
 			fmt.Printf("%s Invalid choice! Please enter 'y' or 'n'.\n", utils.WARNING)
 		}
 	}
+	fmt.Println("")
 }
 
 //* 7. MENU SERVICE
@@ -361,5 +372,6 @@ func MenuService(db *sql.DB){
 			default: fmt.Println("Input invalid, Try again!")
 		}
 		fmt.Println(strings.Repeat("=", 48))
+		fmt.Printf("%s %s %s\n", leftPadding, title, rightPadding)
 	}
 }
