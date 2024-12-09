@@ -34,6 +34,37 @@
         - View of List Order
         - View Order Details by ID
 
+## REQUIRMENTS
+
+    1. Golang: Versi minimal Go 1.18
+    2. PostgreSQL
+    3. Clone Repo (Optional)
+
+## INSTALASI
+
+    1. Clone Repo Project ini:
+        - git clone https://github.com/Darari17/challenge-godb.git
+        - cd challenge-godb
+
+    2. Install Dependencies:
+        - go mod tidy
+
+    3. Setup database:
+        - Buat database baru di PostgreSQL:
+            CREATE DATABASE enigma_laundry;
+
+        - Sesuaikan informasi koneksi di file main.go:
+            const (
+                host     = "localhost"
+                port     = 5432
+                user     = "postgres"
+                password = "12345"
+                dbname   = "enigma_laundry"
+            )
+
+    4. Jalankan Aplikasi:
+        - go run main.go
+
 ## INFORMASI PEMBUAT DAN KONTAK
 
     Pembuat:
