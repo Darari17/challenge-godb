@@ -43,8 +43,13 @@
 ## INSTALASI
 
     1. Clone Repo Project ini:
-        - git clone https://github.com/Darari17/challenge-godb.git
-        - cd challenge-godb
+        - Github:
+            git clone https://github.com/Darari17/challenge-godb.git
+            cd challenge-godb
+
+        - Gitlab:
+            git clone https://git.enigmacamp.com/enigma-20/farid-rhamadhan-darari/challenge-godb.git
+            cd challenge-godb
 
     2. Install Dependencies:
         - go mod tidy
