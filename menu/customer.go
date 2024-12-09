@@ -98,6 +98,7 @@ func AddCustomer(db *sql.DB){
 			break
 		} else if choice == "n"{
 			fmt.Println("Canceled!")
+			fmt.Println("")
 			return
 		} else {
 			fmt.Printf("%s Invalid choice! Please enter 'y' or 'n'!\n", utils.WARNING)
@@ -245,6 +246,7 @@ func UpdateCustomer(db *sql.DB){
 			break
 		} else if choice == "n"{
 			fmt.Println("Canceled!")
+			fmt.Println("")
 			return
 		} else {
 			fmt.Printf("%s Invalid choice! Please enter 'y' or 'n'.\n", utils.WARNING)
@@ -311,6 +313,7 @@ func DeleteCustomer(db *sql.DB){
 			break
 		} else if choice == "n" {
 			fmt.Println("Canceled!")
+			fmt.Println("")
 			return
 		} else {
 			fmt.Printf("%s Invalid choice! Please enter 'y' or 'n'!\n", utils.WARNING)
